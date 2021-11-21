@@ -1,0 +1,30 @@
+Local Environment Setup Instructions
+
+1. Install NodeJS
+
+Download and install v12.22.7
+
+2. Install Angular 12 CLI
+
+npm install -g @angular/cli
+
+3. Run the CLI command ng new and provide the name mt-app, as shown here:
+
+ng new mt-app
+
+4. Install PrimeNG
+
+https://www.primefaces.org/primeng-6.1.6/#/setup
+https://primefaces.org/primeng/showcase/#/primeflex
+
+npm install primeng@12.2.2 --save
+npm install primeicons@4.1.2 --save
+npm install @angular/cdk@12.2.13 --save
+npm install primeflex@3.1.0 --save
+
+5. Create
+
+
+
+
+

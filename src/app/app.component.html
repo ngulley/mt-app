@@ -1,0 +1,15 @@
+<!--
+<app-header></app-header>
+<router-outlet></router-outlet>
+<app-footer></app-footer>
+-->
+
+<p-panel >
+  <ng-template pTemplate="header">
+    <app-header></app-header>
+  </ng-template>
+  <router-outlet></router-outlet>
+  <ng-template pTemplate="footer">
+    <app-footer></app-footer>
+  </ng-template>
+</p-panel>
