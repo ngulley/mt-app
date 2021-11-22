@@ -6,10 +6,14 @@ import { NextripService} from "./services/nextrip.service";
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import {MenubarModule} from "primeng/menubar";
+import {BreadcrumbModule} from 'primeng/breadcrumb';
+
 
 const MODULES = [
   CommonModule,
-  HttpClientModule
+  HttpClientModule,
+  MenubarModule,
+  BreadcrumbModule
 ];
 
 const PIPES: any[] = [];
@@ -26,7 +30,8 @@ const PROVIDERS = [
 @NgModule({
   declarations: [
     ...PIPES,
-    ...COMPONENTS,
+    ...COMPONENTS
+
 
   ],
   exports: [
@@ -34,8 +39,7 @@ const PROVIDERS = [
     FooterComponent
   ],
   imports: [
-    ...MODULES,
-    MenubarModule
+    ...MODULES
   ]
 })
 export class CoreModule {

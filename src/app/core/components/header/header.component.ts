@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import {MenuItem} from 'primeng/api';
 
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -18,20 +17,29 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.items = [
       {
-        label: 'Tools',
-        // icon: 'pi pi-fw pi-cog',
+        label: 'Menu',
+        icon: 'pi pi-fw pi-cog',
         items: [
           {
-            label: 'Show Bus Stops',
-            icon: 'pi pi-fw pi-list'
+            label: 'Home',
+            // icon: 'pi pi-fw pi-list',
+            routerLink: '/home'
           },
           {
-            label: 'Show My Bus',
-            icon: 'pi pi-fw pi-map-marker'
+            label: 'Bus & Train Stops',
+            // icon: 'pi pi-fw pi-list',
+            routerLink: '/stops'
+          },
+          {
+            label: 'Bus & Train Departures',
+            // icon: 'pi pi-fw pi-clock',
+            routerLink: '/departures'
           }
         ]
       }
     ];
+
+
   }
 
 }

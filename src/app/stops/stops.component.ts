@@ -3,6 +3,9 @@ import {Route} from '../core/models/route.model'
 import {Direction} from '../core/models/direction.model'
 import {Place} from "../core/models/place.model";
 import {NextripService} from "../core/services/nextrip.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {MenuItem} from "primeng/api";
+
 
 @Component({
   selector: 'app-stops',
@@ -11,40 +14,78 @@ import {NextripService} from "../core/services/nextrip.service";
 })
 
 export class StopsComponent implements OnInit {
-  nextripService: NextripService
   routes: Route[];
   directions: Direction[];
   places: Place[];
-  selectedRoute: Route;
-  selectedDirection: Direction;
+  selectedRouteId: string | null;
+  selectedDirectionId: number;
 
-  constructor(nextripService: NextripService) {
+
+
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private nextripService: NextripService) {
+    console.log('[StopsComponent][constructor]');
     this.nextripService = nextripService;
     this.routes = [];
     this.directions = [];
     this.places = [];
-    // this.selectedRoute = { agency_id: -1, route_id: '', route_label: ''};
-    this.selectedRoute = { agency_id: -1, route_id: '', route_label: ''};
-    this.selectedDirection = { direction_id: -1, direction_name: ''};
+
+    this.selectedRouteId = null;
+    this.selectedDirectionId =-1;
 
     this.nextripService.getRoutes().subscribe( (data:any) => {
       console.log('[StopsComponent][constructor] Routes: ', data);
       this.routes = data;
+
     }, (error: Error) => {
       console.log('[StopsComponent][constructor] Routes error: ', error)
     });
+
+
   }
 
   ngOnInit(): void {
+
+    this.route.paramMap.subscribe((params) => {
+      const routeId = params.get('routeId');
+      const directionId = new Number(params.get('directionId')).valueOf();
+
+      this.selectedRouteId = routeId;
+      this.selectedDirectionId = directionId;
+
+      if (routeId) {
+        this.nextripService.getDirections(routeId).subscribe( (data:any) => {
+          console.log('[StopsComponent][onSelectRoute] Directions: ', data);
+          this.directions = data;
+        }, (error: Error) => {
+          console.log('[StopsComponent][onSelectRoute] Directions error: ', error)
+        });
+      }
+
+      console.log('[StopsComponent][ngOnInit] routeId: ' + routeId + ', directionId: ' + directionId );
+
+      if (routeId && directionId > -1) {
+        this.nextripService.getStops(routeId, directionId).subscribe( (data:any) => {
+          console.log('[StopsComponent][ngOnInit] Places: ', data);
+          this.places = data;
+
+        }, (error: Error) => {
+          console.log('[StopsComponent][ngOnInit] Places error: ', error)
+        });
+      }
+    }, (error: Error) => {
+      console.log('[DeparturesComponent][ngOnInit] Error:', error);
+    });
   }
 
-  onSelectRoute($event: any) {
-    console.log('[StopsComponent][onSelectRoute] Route ID: ' + this.selectedRoute);
-
+  onSelectRoute(routeId: any) {
+    console.log('[StopsComponent][onSelectRoute] Route ID: ', routeId);
     this.directions = [];
     this.places = [];
+    this.selectedDirectionId = -1;
 
-    this.nextripService.getDirections($event.selectedRoute).subscribe( (data:any) => {
+    this.nextripService.getDirections(routeId).subscribe( (data:any) => {
       console.log('[StopsComponent][onSelectRoute] Directions: ', data);
       this.directions = data;
     }, (error: Error) => {
@@ -52,18 +93,20 @@ export class StopsComponent implements OnInit {
     });
   }
 
-  onSelectDirection($event: any) {
-    console.log('[StopsComponent][onSelectDirection] Direction ID: ' + this.selectedDirection);
+  onSelectDirection(directionId: any) {
+    console.log('[StopsComponent][onSelectDirection] Direction ID: ', directionId);
+    const url = '/stops/' + this.selectedRouteId + '/' + this.selectedDirectionId;
+    console.log('[StopsComponent][onSelectStop] url: ' + url);
+    this.router.navigate([url]);
+  }
 
-    let selRoute: any;
-    selRoute = this.selectedRoute;
+  onSelectStop(place_code: string) {
+    console.log('[StopsComponent][onSelectStop] place_code: ' + place_code);
+    const url = '/departures/' + this.selectedRouteId + '/' + this.selectedDirectionId + '/' + place_code;
+    console.log('[StopsComponent][onSelectStop] url: ' + url);
+    this.router.navigate([url]);
 
-    this.nextripService.getStops(selRoute, $event.selectedDirection).subscribe( (data:any) => {
-      console.log('[StopsComponent][onSelectDirection] Places: ', data);
-      this.places = data;
-    }, (error: Error) => {
-      console.log('[StopsComponent][onSelectDirection] Places error: ', error)
-    });
+
   }
 
 }

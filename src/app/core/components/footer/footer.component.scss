@@ -1,5 +1,5 @@
 .footer-container {
-  color: aliceblue;
+  color: #FFFFFF;
   background-color: lightslategrey;
   text-align: center;
   vertical-align: center;
@@ -8,4 +8,9 @@
   margin: 0 0;
   margin-inside: 0 0;
   min-height: 50px;
+
+  a:hover, a:visited, a:link, a:active {
+    color: #FFFFFF;
+    text-decoration: none;
+  }
 }

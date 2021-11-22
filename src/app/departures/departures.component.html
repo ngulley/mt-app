@@ -1,0 +1,110 @@
+<div class="departues-container">
+
+  <div style="text-align: center"><h1>Bus & Train Departures</h1></div>
+  <br>
+
+  <!--
+  <div class="p-grid">
+    <div class="p-col-3 p-md-3 p-lg-1 p-xl-1">
+      <p-dropdown [options]="routes"
+                  [(ngModel)]="selectedRouteId"
+                  optionLabel="route_label"
+                  optionValue="route_id"
+                  scrollHeight="500px"
+                  placeholder="Select a Route"
+                  (onChange)="onSelectRoute(selectedRouteId)">
+      </p-dropdown>
+    </div>
+    <div class="p-col-1 p-md-1 p-lg-1 p-xl-1">
+    </div>
+    <div *ngIf="directions.length > 0" class="p-col-3 p-md-3 p-lg-1 p-xl-1">
+      <p-dropdown [options]="directions"
+                  [(ngModel)]="selectedDirectionId"
+                  optionLabel="direction_name"
+                  optionValue="direction_id"
+                  placeholder="Select a Direction"
+                  (onChange)="onSelectDirection(selectedDirectionId)">
+      </p-dropdown>
+    </div>
+    <div class="p-col-1 p-md-1 p-lg-1 p-xl-1">
+    </div>
+    <div *ngIf="places.length > 0" class="p-col-3 p-md-3 p-lg-1 p-xl-1">
+      <p-dropdown [options]="places"
+                  [(ngModel)]="selectedPlaceCode"
+                  optionLabel="description"
+                  optionValue="place_code"
+                  placeholder="Select a Stop"
+                  (onChange)="onSelectStop(selectedPlaceCode)">
+      </p-dropdown>
+    </div>
+    <div class="p-col-1 p-md-1 p-lg-7 p-xl-7"></div>
+  </div>
+  -->
+
+  <div class="p-grid p-text-center">
+    <div class="p-col-12">
+      <p-dropdown [options]="routes"
+                  [(ngModel)]="selectedRouteId"
+                  optionLabel="route_label"
+                  optionValue="route_id"
+                  scrollHeight="500px"
+                  placeholder="Select a Route"
+                  (onChange)="onSelectRoute(selectedRouteId)">
+      </p-dropdown>
+    </div>
+    <div *ngIf="directions.length > 0" class="p-col-12">
+      <p-dropdown [options]="directions"
+                  [(ngModel)]="selectedDirectionId"
+                  optionLabel="direction_name"
+                  optionValue="direction_id"
+                  placeholder="Select a Direction"
+                  (onChange)="onSelectDirection(selectedDirectionId)">
+      </p-dropdown>
+    </div>
+    <div *ngIf="places.length > 0" class="p-col-12">
+      <p-dropdown [options]="places"
+                  [(ngModel)]="selectedPlaceCode"
+                  optionLabel="description"
+                  optionValue="place_code"
+                  placeholder="Select a Stop"
+                  (onChange)="onSelectStop(selectedPlaceCode)">
+      </p-dropdown>
+    </div>
+    <div class="p-col-1 p-md-1 p-lg-7 p-xl-7"></div>
+  </div>
+
+  <p-table *ngIf="stops.length > 0" [value]="departures" styleClass="p-datatable-striped" responsiveLayout="scroll" [rowHover]="true" >
+    <ng-template pTemplate="header">
+      <tr>
+        <th colspan="2" class="table-header-1">{{stops[0]?.description}}</th>
+        <th class="table-header-1-1">
+          <span *ngIf="stops.length > 0">Stop #: {{stops[0]?.stop_id}}</span>
+        </th>
+      </tr>
+      <tr>
+        <th class="table-header-2">Route</th>
+        <th class="table-header-2">Destination</th>
+        <th class="table-header-2">Departs</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-departure>
+      <tr class="table-row">
+        <td>{{departure.route_short_name}}</td>
+        <td>{{departure.description}}</td>
+        <td>
+          <span *ngIf="departure.schedule_relationship=='Skipped'" style="color: red; font-weight: bold;">Canceled&nbsp;{{departure.departure_text}}</span>
+          <span *ngIf="departure.schedule_relationship!='Skipped'">{{departure.departure_text}}</span>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr class="table-row">
+        <td>No departures at the moment</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+
+</div>

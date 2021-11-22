@@ -1,0 +1,25 @@
+.departues-container {
+  min-height: 450px;
+
+  .table-header-1 {
+    font-size: 1.5em;
+    font-weight: bold;
+    background-color: turquoise;
+  }
+
+  .table-header-1-1 {
+    font-size: 1em;
+    background-color: turquoise;
+  }
+
+  .table-header-2 {
+    font-size: 1.2em;
+    font-weight: bold;
+    background-color: azure;
+  }
+
+  .table-row:hover {
+    cursor: pointer;
+  }
+
+}

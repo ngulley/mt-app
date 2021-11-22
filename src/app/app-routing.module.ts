@@ -3,12 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import {AppComponent} from "./app.component";
 import {HomeComponent} from "./home/home.component";
 import {StopsComponent} from "./stops/stops.component";
+import {DeparturesComponent} from "./departures/departures.component";
 
 const routes: Routes = [
-  {
-    path: '',
-    component: AppComponent
-  },
   {
     path: 'home',
     component: HomeComponent
@@ -20,7 +17,19 @@ const routes: Routes = [
   {
     path: 'stops/:routeId/:directionId',
     component: StopsComponent
-  }
+  },
+  {
+    path: 'departures',
+    component: DeparturesComponent
+  },
+  {
+    path: 'departures/:routeId/:directionId/:placeCode',
+    component: DeparturesComponent
+  },
+  {
+    path: '**',
+    redirectTo: 'home'
+  },
 ];
 
 @NgModule({

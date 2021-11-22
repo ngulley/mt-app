@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Divider} from "primeng/divider";
 
 @Component({
   selector: 'app-home',
