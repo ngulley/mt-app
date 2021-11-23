@@ -3,44 +3,6 @@
   <div style="text-align: center"><h1>Bus & Train Departures</h1></div>
   <br>
 
-  <!--
-  <div class="p-grid">
-    <div class="p-col-3 p-md-3 p-lg-1 p-xl-1">
-      <p-dropdown [options]="routes"
-                  [(ngModel)]="selectedRouteId"
-                  optionLabel="route_label"
-                  optionValue="route_id"
-                  scrollHeight="500px"
-                  placeholder="Select a Route"
-                  (onChange)="onSelectRoute(selectedRouteId)">
-      </p-dropdown>
-    </div>
-    <div class="p-col-1 p-md-1 p-lg-1 p-xl-1">
-    </div>
-    <div *ngIf="directions.length > 0" class="p-col-3 p-md-3 p-lg-1 p-xl-1">
-      <p-dropdown [options]="directions"
-                  [(ngModel)]="selectedDirectionId"
-                  optionLabel="direction_name"
-                  optionValue="direction_id"
-                  placeholder="Select a Direction"
-                  (onChange)="onSelectDirection(selectedDirectionId)">
-      </p-dropdown>
-    </div>
-    <div class="p-col-1 p-md-1 p-lg-1 p-xl-1">
-    </div>
-    <div *ngIf="places.length > 0" class="p-col-3 p-md-3 p-lg-1 p-xl-1">
-      <p-dropdown [options]="places"
-                  [(ngModel)]="selectedPlaceCode"
-                  optionLabel="description"
-                  optionValue="place_code"
-                  placeholder="Select a Stop"
-                  (onChange)="onSelectStop(selectedPlaceCode)">
-      </p-dropdown>
-    </div>
-    <div class="p-col-1 p-md-1 p-lg-7 p-xl-7"></div>
-  </div>
-  -->
-
   <div class="p-grid p-text-center">
     <div class="p-col-12">
       <p-dropdown [options]="routes"
@@ -107,4 +69,9 @@
 
   </p-table>
 
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="p-text-center"><a [routerLink]="'/home'">- Home -</a> </div>
 </div>

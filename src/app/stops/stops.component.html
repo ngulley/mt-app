@@ -1,77 +1,9 @@
 <div class="stops-container">
 
-
-
   <div style="text-align: center"><h1>Bus & Train Stops</h1></div>
   <br>
 
-  <!--  UI Design - V1
-  <div class="p-grid">
-    <div class="p-col-12 p-md-3 p-lg-1 p-xl-1">
-      <p-dropdown [options]="routes"
-                  [(ngModel)]="selectedRouteId"
-                  optionLabel="route_label"
-                  optionValue="route_id"
-                  scrollHeight="500px"
-                  placeholder="Select a Route"
-                  (onChange)="onSelectRoute(selectedRouteId)">
-      </p-dropdown>
-    </div>
-
-    <div class="p-col-0 p-md-1 p-lg-1 p-xl-1">
-    </div>
-
-    <div *ngIf="directions.length > 0" class="p-col-12 p-md-3 p-lg-1 p-xl-1">
-      <p-dropdown [options]="directions"
-                  [(ngModel)]="selectedDirectionId"
-                  optionLabel="direction_name"
-                  optionValue="direction_id"
-                  placeholder="Select a Direction"
-                  (onChange)="onSelectDirection(selectedDirectionId)">
-      </p-dropdown>
-    </div>
-
-    <div class="p-col-12 p-md-5 p-lg-9 p-xl-9"></div>
-  </div>
-   -->
-
-  <!--
-  <div class="p-grid">
-    <div class="p-col-1 p-md-2 p-lg-4 p-xl-4">
-    </div>
-    <div class="p-col-10 p-md-8 p-lg-4 p-xl-4">
-      <p-dropdown [options]="routes"
-                  [(ngModel)]="selectedRouteId"
-                  optionLabel="route_label"
-                  optionValue="route_id"
-                  scrollHeight="500px"
-                  placeholder="Select a Route"
-                  (onChange)="onSelectRoute(selectedRouteId)">
-      </p-dropdown>
-    </div>
-    <div class="p-col-1 p-md-2 p-lg-4 p-xl-4">
-    </div>
-  </div>
-  <div class="p-grid" style="width: 100%">
-    <div class="p-col-1 p-md-2 p-lg-4 p-xl-4">
-    </div>
-    <div *ngIf="directions.length > 0" class="p-col-10 p-md-8 p-lg-4 p-xl-4">
-      <p-dropdown [options]="directions"
-                  [(ngModel)]="selectedDirectionId"
-                  optionLabel="direction_name"
-                  optionValue="direction_id"
-                  placeholder="Select a Direction"
-                  (onChange)="onSelectDirection(selectedDirectionId)">
-      </p-dropdown>
-    </div>
-    <div class="p-col-1 p-md-2 p-lg-4 p-xl-4">
-    </div>
-  </div>
-  -->
-
-  <!-- UI Design - V2   -->
   <div class="p-grid p-text-center">
-
     <div class="p-col-12">
       <p-dropdown [options]="routes"
                   [(ngModel)]="selectedRouteId"
@@ -142,4 +74,9 @@
     </ng-template>
   </p-table>
 
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="p-text-center"><a [routerLink]="'/home'">- Home -</a> </div>
 </div>
