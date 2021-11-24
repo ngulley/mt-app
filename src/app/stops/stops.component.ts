@@ -4,8 +4,8 @@ import {Direction} from '../core/models/direction.model'
 import {Place} from "../core/models/place.model";
 import {NextripService} from "../core/services/nextrip.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {MenuItem} from "primeng/api";
-
+import {Message} from 'primeng//api';
+import {AppConstants} from "../app.constants";
 
 @Component({
   selector: 'app-stops',
@@ -14,6 +14,7 @@ import {MenuItem} from "primeng/api";
 })
 
 export class StopsComponent implements OnInit {
+  messages: Message[];
   routes: Route[];
   directions: Direction[];
   places: Place[];
@@ -27,6 +28,7 @@ export class StopsComponent implements OnInit {
               private nextripService: NextripService) {
     console.log('[StopsComponent][constructor]');
     this.nextripService = nextripService;
+    this.messages = [];
     this.routes = [];
     this.directions = [];
     this.places = [];
@@ -35,18 +37,15 @@ export class StopsComponent implements OnInit {
     this.selectedDirectionId =-1;
 
     this.nextripService.getRoutes().subscribe( (data:any) => {
-      console.log('[StopsComponent][constructor] Routes: ', data);
+      // console.log('[StopsComponent][constructor] Routes: ', data);
       this.routes = data;
-
     }, (error: Error) => {
-      console.log('[StopsComponent][constructor] Routes error: ', error)
+      console.log('[StopsComponent][constructor] Routes error: ', error);
+      this.messages.push({severity: 'error', summary: 'Error Message', detail: AppConstants.MESSAGES.SERVICE_ERROR});
     });
-
-
   }
 
   ngOnInit(): void {
-
     this.route.paramMap.subscribe((params) => {
       const routeId = params.get('routeId');
       const directionId = new Number(params.get('directionId')).valueOf();
@@ -56,10 +55,11 @@ export class StopsComponent implements OnInit {
 
       if (routeId) {
         this.nextripService.getDirections(routeId).subscribe( (data:any) => {
-          console.log('[StopsComponent][onSelectRoute] Directions: ', data);
+          // console.log('[StopsComponent][onSelectRoute] Directions: ', data);
           this.directions = data;
         }, (error: Error) => {
-          console.log('[StopsComponent][onSelectRoute] Directions error: ', error)
+          console.log('[StopsComponent][onSelectRoute] Directions error: ', error);
+          this.messages.push({severity: 'error', summary: 'Error Message', detail: AppConstants.MESSAGES.SERVICE_ERROR});
         });
       }
 
@@ -67,11 +67,11 @@ export class StopsComponent implements OnInit {
 
       if (routeId && directionId > -1) {
         this.nextripService.getStops(routeId, directionId).subscribe( (data:any) => {
-          console.log('[StopsComponent][ngOnInit] Places: ', data);
+          // console.log('[StopsComponent][ngOnInit] Places: ', data);
           this.places = data;
-
         }, (error: Error) => {
-          console.log('[StopsComponent][ngOnInit] Places error: ', error)
+          console.log('[StopsComponent][ngOnInit] Places error: ', error);
+          this.messages.push({severity: 'error', summary: 'Error Message', detail: AppConstants.MESSAGES.SERVICE_ERROR});
         });
       }
     }, (error: Error) => {
@@ -81,15 +81,17 @@ export class StopsComponent implements OnInit {
 
   onSelectRoute(routeId: any) {
     console.log('[StopsComponent][onSelectRoute] Route ID: ', routeId);
+    this.messages = [];
     this.directions = [];
     this.places = [];
     this.selectedDirectionId = -1;
 
     this.nextripService.getDirections(routeId).subscribe( (data:any) => {
-      console.log('[StopsComponent][onSelectRoute] Directions: ', data);
+      // console.log('[StopsComponent][onSelectRoute] Directions: ', data);
       this.directions = data;
     }, (error: Error) => {
-      console.log('[StopsComponent][onSelectRoute] Directions error: ', error)
+      console.log('[StopsComponent][onSelectRoute] Directions error: ', error);
+      this.messages.push({severity: 'error', summary: 'Error Message', detail: AppConstants.MESSAGES.SERVICE_ERROR});
     });
   }
 
@@ -105,10 +107,7 @@ export class StopsComponent implements OnInit {
     const url = '/departures/' + this.selectedRouteId + '/' + this.selectedDirectionId + '/' + place_code;
     console.log('[StopsComponent][onSelectStop] url: ' + url);
     this.router.navigate([url]);
-
-
   }
-
 }
 
 

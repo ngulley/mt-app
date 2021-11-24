@@ -2,7 +2,9 @@ Local Environment Setup Instructions
 
 1. Install NodeJS
 
-Download and install v12.22.7
+Download and install the latest NodeJS 12.x version
+
+https://nodejs.org/download/release/v12.22.7/
 
 2. Install Angular 12 CLI
 

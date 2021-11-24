@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap} from "@angular/router";
 import { switchMap } from 'rxjs/operators';
+import {Message} from 'primeng//api';
 import {Route} from "../core/models/route.model";
 import {Direction} from "../core/models/direction.model";
 import {NextripService} from "../core/services/nextrip.service";
 import {Place} from "../core/models/place.model";
 import {Departure} from "../core/models/departure.model";
 import {Stop} from "../core/models/stop.model";
+import {AppConstants} from "../app.constants";
 
 @Component({
   selector: 'app-departures',
@@ -14,6 +16,7 @@ import {Stop} from "../core/models/stop.model";
   styleUrls: ['./departures.component.scss']
 })
 export class DeparturesComponent implements OnInit {
+  messages: Message[];
   routes: Route[];
   directions: Direction[];
   places: Place[];
@@ -28,6 +31,7 @@ export class DeparturesComponent implements OnInit {
               private router: Router,
               private nextripService: NextripService) {
     console.log('[DeparturesComponent][constructor]');
+    this.messages = [];
     this.routes = [];
     this.directions = [];
     this.places = [];
@@ -42,7 +46,8 @@ export class DeparturesComponent implements OnInit {
       console.log('[DeparturesComponent][constructor] Routes: ', data);
       this.routes = data;
     }, (error: Error) => {
-      console.log('[DeparturesComponent][constructor] Routes error: ', error)
+      console.log('[DeparturesComponent][constructor] Routes error: ', error);
+      this.messages.push({severity: 'error', summary: 'Error Message', detail: AppConstants.MESSAGES.SERVICE_ERROR});
     });
   }
 
@@ -60,19 +65,20 @@ export class DeparturesComponent implements OnInit {
 
      if (this.selectedRouteId) {
        this.nextripService.getDirections(routeId).subscribe( (data:any) => {
-         console.log('[DeparturesComponent][ngOnInit] Directions: ', data);
+         // console.log('[DeparturesComponent][ngOnInit] Directions: ', data);
          this.directions = data;
        }, (error: Error) => {
-         console.log('[DeparturesComponent][ngOnInit] Directions error: ', error)
+         console.log('[DeparturesComponent][ngOnInit] Directions error: ', error);
+         this.messages.push({severity: 'error', summary: 'Error Message', detail: AppConstants.MESSAGES.SERVICE_ERROR});
        });
 
        if (this.selectedDirectionId > -1) {
          this.nextripService.getStops(this.selectedRouteId, this.selectedDirectionId).subscribe( (data:any) => {
-           console.log('[DeparturesComponent][ngOnInit] Places: ', data);
+           // console.log('[DeparturesComponent][ngOnInit] Places: ', data);
            this.places = data;
-
          }, (error: Error) => {
-           console.log('[DeparturesComponent][ngOnInit] Places error: ', error)
+           console.log('[DeparturesComponent][ngOnInit] Places error: ', error);
+           this.messages.push({severity: 'error', summary: 'Error Message', detail: AppConstants.MESSAGES.SERVICE_ERROR});
          });
        }
      }
@@ -83,11 +89,10 @@ export class DeparturesComponent implements OnInit {
          this.departures = data.departures;
          this.stops = data.stops;
        }, (error: Error) => {
-         console.log('[DeparturesComponent][ngOnInit] Departures error: ', error)
+         console.log('[DeparturesComponent][ngOnInit] Departures error: ', error);
+         this.messages.push({severity: 'error', summary: 'Error Message', detail: AppConstants.MESSAGES.SERVICE_ERROR});
        });
      }
-
-
    }, (error: Error) => {
      console.log('[DeparturesComponent][ngOnInit] Error:', error);
    });
@@ -95,7 +100,7 @@ export class DeparturesComponent implements OnInit {
 
   onSelectRoute(routeId: any) {
     console.log('[DeparturesComponent][onSelectRoute] Route ID: ' + routeId);
-
+    this.messages = [];
     this.directions = [];
     this.places = [];
     this.departures = [];
@@ -104,10 +109,11 @@ export class DeparturesComponent implements OnInit {
     this.selectedDirectionId = -1;
 
     this.nextripService.getDirections(routeId).subscribe( (data:any) => {
-      console.log('[DeparturesComponent][onSelectRoute] Directions: ', data);
+      // console.log('[DeparturesComponent][onSelectRoute] Directions: ', data);
       this.directions = data;
     }, (error: Error) => {
-      console.log('[DeparturesComponent][onSelectRoute] Directions error: ', error)
+      console.log('[DeparturesComponent][onSelectRoute] Directions error: ', error);
+      this.messages.push({severity: 'error', summary: 'Error Message', detail: AppConstants.MESSAGES.SERVICE_ERROR});
     });
   }
 
@@ -119,12 +125,12 @@ export class DeparturesComponent implements OnInit {
     this.stops = [];
     this.selectedPlaceCode = null;
 
-
     this.nextripService.getStops(this.selectedRouteId, directionId).subscribe( (data:any) => {
-      console.log('[DeparturesComponent][onSelectDirection] Places: ', data);
+      // console.log('[DeparturesComponent][onSelectDirection] Places: ', data);
       this.places = data;
     }, (error: Error) => {
-      console.log('[StopsComponent][onSelectDirection] Places error: ', error)
+      console.log('[DeparturesComponent][onSelectDirection] Places error: ', error);
+      this.messages.push({severity: 'error', summary: 'Error Message', detail: AppConstants.MESSAGES.SERVICE_ERROR});
     });
   }
 
@@ -134,5 +140,4 @@ export class DeparturesComponent implements OnInit {
     console.log('[DeparturesComponent][onSelectStop] url: ' + url);
     this.router.navigate([url]);
   }
-
 }
